@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to "post-update".
+
+git update-server-info
+git show master:README.md > README.md
+pandoc README.md -o README.html --standalone
+pandoc --standalone -o README.html README.md --template ./template.readme.html --title "`basename $(pwd)` :: README.md"
+rm README.md
